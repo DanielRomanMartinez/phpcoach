@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Domain\Command\PutUser;

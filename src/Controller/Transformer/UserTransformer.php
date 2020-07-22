@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Transformer;
+namespace App\Controller\Transformer;
 
 use App\Domain\Model\User\User;
 

@@ -18,12 +18,11 @@ namespace App\Controller;
 use App\Domain\Model\User\User;
 use App\Domain\Model\User\UserNotFoundException;
 use App\Domain\Query\GetUser;
-use App\Domain\Transformer\UserTransformer;
+use App\Controller\Transformer\UserTransformer;
 use Drift\CommandBus\Bus\QueryBus;
 use Drift\CommandBus\Exception\InvalidCommandException;
 use React\Promise\PromiseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DefaultController.
