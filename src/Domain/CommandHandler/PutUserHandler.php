@@ -23,8 +23,7 @@ class PutUserHandler
     public function handle(PutUser $putUser) : void
     {
         echo $this->repository->putUser(
-            $putUser->getUid(),
-            $putUser->getName()
+            $putUser->getUser()
         );
     }
 }

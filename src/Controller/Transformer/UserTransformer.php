@@ -6,10 +6,10 @@ use App\Domain\Model\User\User;
 
 final class UserTransformer
 {
-    public static function fromArray(array $userData) : User
+    public static function fromArray(string $uid, array $userData) : User
     {
         return new User(
-            $userData['uid'],
+            $uid,
             $userData['name'],
         );
     }

@@ -49,11 +49,11 @@ class UserRepository
     }
 
     /**
-     * @param string $uid
-     * @param string $name
+     * @param User $user
+     * @return string
      */
-    public function putUser(string $uid, string $name): string
+    public function putUser(User $user): string
     {
-        return "\n\nPut User with uid: $uid and name $name \n\n";
+        return "\n\nPut User with uid: ".$user->uid()." and name ".$user->name()." \n\n";
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Domain\Command;
 
+use App\Domain\Model\User\User;
+
 /**
  * Class PutUser
  * @package App\Domain\Command
@@ -9,38 +11,24 @@ namespace App\Domain\Command;
 class PutUser
 {
     /**
-     * @var string
+     * @var User
      */
-    private $uid;
-    /**
-     * @var string
-     */
-    private $name;
+    private $user;
 
     /**
      * PutUser constructor.
-     * @param string $uid
-     * @param string $name
+     * @param User $user
      */
-    public function __construct(string $uid, string $name)
+    public function __construct(User $user)
     {
-        $this->uid = $uid;
-        $this->name = $name;
+        $this->user = $user;
     }
 
     /**
      * @return string
      */
-    public function getUid(): string
+    public function getUser(): User
     {
-        return $this->uid;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
+        return $this->user;
     }
 }
