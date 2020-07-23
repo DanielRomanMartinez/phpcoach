@@ -13,7 +13,8 @@
     "drift/http-kernel": "^0.1.3",
     "drift/server": "^0.1.2",
     "drift/react-functions": "^0.1",
-    "drift/command-bus-bundle": "*"
+    "drift/command-bus-bundle": "*",
+    "ext-json": "*"
   },
 
   "autoload": {

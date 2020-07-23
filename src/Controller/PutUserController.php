@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Domain\Command\PutUser;
 use Drift\CommandBus\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -28,12 +29,12 @@ class PutUserController
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(string $uid)
+    public function __invoke(Request $request, string $uid)
     {
-        $name = 'Pepe';
+        $body = json_decode($request->getContent(), true);
         return $this
             ->commandBus
-            ->execute(new PutUser($uid, $name))
+            ->execute(new PutUser($uid, $body['name']))
             ->then(function () {
                 return new Response('OK', 202);
             });
