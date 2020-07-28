@@ -6,7 +6,7 @@ use App\Domain\Model\User\MemoryUserRepository;
 
 class MemoryUserRepositoryTest extends UserRepositoryTest
 {
-    protected function createRepository(array $users = []): UserRepository
+    protected function createRepository(array $users = []): MemoryUserRepository
     {
         return new MemoryUserRepository($users);
     }
