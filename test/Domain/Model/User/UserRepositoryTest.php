@@ -7,6 +7,7 @@ use App\Domain\Model\User\UserNotFoundException;
 use App\Domain\Model\User\UserRepository;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;
+use React\EventLoop\LoopInterface;
 use function Clue\React\Block\await;
 
 abstract class UserRepositoryTest extends TestCase
@@ -16,67 +17,61 @@ abstract class UserRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->loop = Factory::create();
+        $this->repository =
     }
 
-    public function tearDown(): void
-    {
-        $this->loop = null;
-    }
+    /**
+     * @param LoopInterface $loop
+     * @return UserRepository
+     */
+    abstract protected function createEmptyRepository(LoopInterface $loop) : UserRepository;
 
-    abstract protected function createRepository(array $users = []): UserRepository;
-
-    /** @test */
-    public function user_not_found_throws_an_exception()
+    public function testUserNotExist()
     {
+        $repository = $this->createEmptyRepository($this->loop);
+
+        $promise = $repository->find('123');
         $this->expectException(UserNotFoundException::class);
-
-        await($this->createRepository()->find(123), $this->loop);
+        await($promise, $this->loop);
     }
 
-    /** @test */
-    public function user_can_be_found()
+    public function testUserExists()
     {
-        $user = await($this->createRepository([4 => new User(4, 'Han Solo')])->find(4), $this->loop);
+        $repository = $this->createEmptyRepository($this->loop);
 
-        $this->assertEquals(4, $user->getId());
-        $this->assertEquals('Han Solo', $user->getName());
+        $promise = $repository
+            ->save(new User('123', 'Percebes'))
+            ->then(function() use ($repository) {
+                return $repository->find('123');
+            });
+
+        $user = await($promise, $this->loop);
+        $this->assertEquals('123', $user->uid());
     }
 
-    /** @test */
-    public function user_not_deleted_throws_an_exception()
+    public function testUserTwice()
+     {
+         $repository = $this->createEmptyRepository($this->loop);
+         $user1 = new User('123', 'Percebes');
+         await($repository->save($user1), $this->loop);
+
+         $user2 = new User('123', 'Engonga');
+         await($repository->save($user2), $this->loop);
+
+         $promise2 = $repository->find(123);
+         $user = await($promise2, $this->loop);
+
+         $this->assertEquals('Engonga', $user->getName());
+     }
+
+    public function testUSerFindPropery()
     {
+        $repository = $this->createEmptyRepository($this->loop);
+        $user1 = new User('123', 'Percebes');
+        await($repository->save($user1), $this->loop);
+
+        $promise = $repository->find('456');
         $this->expectException(UserNotFoundException::class);
-
-        await($this->createRepository([4 => new User(4, 'Han Solo')])->delete(new User(8, 'Luke Skywalker')), $this->loop);
-    }
-
-    /** @test */
-    public function user_can_be_deleted()
-    {
-        $user = new User(4, 'Han Solo');
-
-        $this->assertTrue(
-            await($this->createRepository([$user->getId() => $user])->delete($user), $this->loop)
-        );
-    }
-
-    /** @test */
-    public function user_can_be_saved()
-    {
-        $repository = $this->createRepository();
-
-        await($repository->save(new User(1, 'Han Solo')), $this->loop);
-
-        $this->assertEquals('Han Solo', await($repository->find(1), $this->loop)->getName());
-    }
-
-    /** @test */
-    public function user_saved_twice_overrides_properties()
-    {
-        $repository = $this->createRepository([4 => new User(4, 'Han Solo')]);
-
-        await($repository->save(new User(4, 'Chewbacca')), $this->loop);
-
-        $this->assertEquals('Chewbacca', await($repository->find(4), $this->loop)->getName());
+        await($promise, $this->loop);
     }
 }

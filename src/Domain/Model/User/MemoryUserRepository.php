@@ -23,16 +23,16 @@ class MemoryUserRepository implements UserRepository
         return resolve();
     }
 
-    public function find(int $id): PromiseInterface
+    public function find(int $uid): PromiseInterface
     {
-        return isset($this->users[$id])
-            ? resolve($this->users[$id])
+        return array_key_exists($uid, $this->users)
+            ? resolve($this->users[$uid])
             : reject(new UserNotFoundException());
     }
 
     public function delete(User $user): PromiseInterface
     {
-        if (isset($this->users[$user->uid()])) {
+        if (array_key_exists($user->uid(), $this->users)) {
             unset($this->users[$user->uid()]);
             return resolve(true);
         }
