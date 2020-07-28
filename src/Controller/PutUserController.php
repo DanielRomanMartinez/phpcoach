@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\Transformer\UserTransformer;
 use App\Domain\Command\PutUser;
+use App\Domain\Model\User\NameTooShortException;
 use Drift\CommandBus\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +41,8 @@ class PutUserController
             ->execute(new PutUser($user))
             ->then(function () {
                 return new Response('OK', 202);
+            })->otherwise(function(NameTooShortException $e){
+                return new Response($e->getMessage(), 400);
             });
     }
 }

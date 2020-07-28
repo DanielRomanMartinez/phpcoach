@@ -10,6 +10,11 @@ framework:
     php_errors:
         log: false
 
+command_bus:
+    command_bus:
+        middlewares:
+            - App\Domain\Middleware\CheckUserNameLength
+
 # config/services.yaml
 services:
     _defaults:
@@ -48,3 +53,15 @@ services:
         resource: "%app_path%/src/Domain/CommandHandler/*"
         tags:
             - {name: "command_handler"}
+
+    #
+    # Services
+    #
+    App\Domain\Middleware\:
+        resource: "%app_path%/src/Domain/Middleware/*"
+        tags:
+            - {name: "service"}
+
+    App\Domain\Model\User\MemoryUserRepository:
+    App\Domain\Model\User\UserRepository:
+        alias: App\Domain\Model\User\MemoryUserRepository
