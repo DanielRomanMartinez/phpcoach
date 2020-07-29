@@ -15,7 +15,10 @@
     "drift/react-functions": "^0.1",
     "drift/command-bus-bundle": "*",
     "drift/phpunit-bridge": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "drift/dbal-bundle": "*",
+    "clue/reactphp-sqlite": "*",
+    "react/mysql": "*"
   },
 
   "autoload": {

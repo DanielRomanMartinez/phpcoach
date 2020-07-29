@@ -8,3 +8,8 @@ put_user:
   path: /users/{uid}
   controller: App\Controller\PutUserController
   methods: [PUT]
+
+user_delete:
+  path: /users/{id}
+  controller: App\Controller\DeleteUserController
+  methods: [DELETE]

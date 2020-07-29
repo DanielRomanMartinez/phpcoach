@@ -15,6 +15,17 @@ command_bus:
         middlewares:
             - App\Domain\Middleware\CheckUserNameLength
 
+dbal:
+    connections:
+        main:
+            driver: mysql
+            host: 127.0.0.1
+            port: 3306
+            user: root
+            password: root
+            dbname: phpcoach
+
+
 # config/services.yaml
 services:
     _defaults:
@@ -63,5 +74,8 @@ services:
             - {name: "service"}
 
     App\Domain\Model\User\MemoryUserRepository:
+    App\Infrastructure\DBAL\Model\User\DBALUserRepository:
+
     App\Domain\Model\User\UserRepository:
-        alias: App\Domain\Model\User\MemoryUserRepository
+        alias: App\Infrastructure\DBAL\Model\User\DBALUserRepository
+

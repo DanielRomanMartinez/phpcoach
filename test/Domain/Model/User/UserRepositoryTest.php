@@ -17,7 +17,6 @@ abstract class UserRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->loop = Factory::create();
-        $this->repository =
     }
 
     /**
@@ -61,7 +60,7 @@ abstract class UserRepositoryTest extends TestCase
          $promise2 = $repository->find(123);
          $user = await($promise2, $this->loop);
 
-         $this->assertEquals('Engonga', $user->getName());
+         $this->assertEquals('Engonga', $user->name());
      }
 
     public function testUSerFindPropery()
