@@ -42,14 +42,6 @@ services:
             - {name: controller.service_arguments}
 
     #
-    # Repositories
-    #
-    App\Domain\Repository\:
-        resource: "%app_path%/src/Domain/Repository/*"
-        tags:
-            - {name: "repository"}
-
-    #
     # QueryHandlers
     #
     App\Domain\QueryHandler\:
