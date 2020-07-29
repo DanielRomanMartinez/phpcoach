@@ -23,7 +23,7 @@ dbal:
             port: 3306
             user: root
             password: root
-            dbname: phpcoach
+            dbname: users
 
 
 # config/services.yaml

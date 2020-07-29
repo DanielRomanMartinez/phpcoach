@@ -63,7 +63,7 @@ abstract class UserRepositoryTest extends TestCase
          $this->assertEquals('Engonga', $user->name());
      }
 
-    public function testUSerFindPropery()
+    public function testUserFindProperly()
     {
         $repository = $this->createEmptyRepository($this->loop);
         $user1 = new User('123', 'Percebes');
@@ -72,5 +72,22 @@ abstract class UserRepositoryTest extends TestCase
         $promise = $repository->find('456');
         $this->expectException(UserNotFoundException::class);
         await($promise, $this->loop);
+    }
+
+    public function testUserDeleted()
+    {
+        $repository = $this->createEmptyRepository($this->loop);
+
+        $promise = $repository
+            ->save(new User('123', 'Percebes'))
+            ->then(function() use ($repository) {
+                return $repository->find('123');
+            });
+
+        $user = await($promise, $this->loop);
+        $this->assertEquals('123', $user->uid());
+
+        $this->expectException(UserNotFoundException::class);
+        await($repository->delete($user), $this->loop);
     }
 }
