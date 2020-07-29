@@ -3,8 +3,10 @@
 namespace App\Domain\CommandHandler;
 
 use App\Domain\Command\PutUser;
+use App\Domain\Event\UserWasSaved;
 use App\Domain\Model\User\User;
 use App\Domain\Model\User\UserRepository;
+use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
 
@@ -20,12 +22,21 @@ class PutUserHandler
     private $repository;
 
     /**
+     * @var EventBus
+     */
+    private $eventBus;
+
+    /**
      * PutUserHandler constructor.
      * @param UserRepository $userRepository
+     * @param EventBus $eventBus
      */
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        EventBus $eventBus
+    ) {
         $this->repository = $userRepository;
+        $this->eventBus = $eventBus;
     }
 
     /**
@@ -34,8 +45,13 @@ class PutUserHandler
      */
     public function handle(PutUser $putUser) : PromiseInterface
     {
-        return $this->repository->save(
-            $putUser->getUser()
-        );
+        $user = $putUser->getUser();
+
+        return $this->repository
+            ->save($user)
+            ->then(function() use ($user) {
+                return $this->eventBus->dispatch(new UserWasSaved($user));
+        });
+
     }
 }

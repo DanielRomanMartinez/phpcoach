@@ -15,6 +15,7 @@
     "drift/react-functions": "^0.1",
     "drift/command-bus-bundle": "*",
     "drift/phpunit-bridge": "*",
+    "drift/event-bus-bundle": "*",
     "ext-json": "*",
     "drift/dbal-bundle": "*",
     "clue/reactphp-sqlite": "*",
