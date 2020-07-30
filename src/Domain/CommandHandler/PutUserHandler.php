@@ -4,11 +4,9 @@ namespace App\Domain\CommandHandler;
 
 use App\Domain\Command\PutUser;
 use App\Domain\Event\UserWasSaved;
-use App\Domain\Model\User\User;
 use App\Domain\Model\User\UserRepository;
 use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
-use function React\Promise\resolve;
 
 /**
  * Class PutUserHandler

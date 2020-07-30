@@ -25,6 +25,16 @@ dbal:
             password: root
             dbname: users
 
+event_bus:
+    exchanges:
+        default: events_amqs
+    router:
+        _all: default
+    async_pass_through: false
+    async_adapter:
+        adapter: amqp
+        amqp:
+            host: localhost
 
 # config/services.yaml
 services:
@@ -67,7 +77,10 @@ services:
 
     App\Domain\Model\User\MemoryUserRepository:
     App\Infrastructure\DBAL\Model\User\DBALUserRepository:
+    App\Domain\Model\User\ComposedUserRepository:
 
     App\Domain\Model\User\UserRepository:
+        alias: App\Domain\Model\User\ComposedUserRepository
+    App\Domain\Model\User\PersistentUserRepository:
         alias: App\Infrastructure\DBAL\Model\User\DBALUserRepository
 

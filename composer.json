@@ -19,7 +19,8 @@
     "ext-json": "*",
     "drift/dbal-bundle": "*",
     "clue/reactphp-sqlite": "*",
-    "react/mysql": "*"
+    "react/mysql": "*",
+    "drift/amqp-bundle": "*"
   },
 
   "autoload": {
