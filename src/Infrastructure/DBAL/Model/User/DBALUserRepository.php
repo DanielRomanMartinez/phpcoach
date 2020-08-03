@@ -39,7 +39,7 @@ class DBALUserRepository implements PersistentUserRepository
             ]);
     }
 
-    public function find(int $uid): PromiseInterface
+    public function find(string $uid): PromiseInterface
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -63,16 +63,12 @@ class DBALUserRepository implements PersistentUserRepository
             });
     }
 
-    public function delete(User $user): PromiseInterface
+    public function delete(string $uid): PromiseInterface
     {
         return $this->connection
             ->delete('users', [
-                'uid' => $user->uid()
-            ])->then(function (Result $result){
-               if($result->fetchCount() === 0){
-                   throw new UserNotFoundException();
-               }
-            });
+                'uid' => $uid
+            ]);
     }
 
     /**

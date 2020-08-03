@@ -17,15 +17,15 @@ interface UserRepository
     public function save(User $user): PromiseInterface;
 
     /**
-     * @param int $id
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function find(int $id): PromiseInterface;
+    public function find(string $uid): PromiseInterface;
 
     /**
-     * @param User $user
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function delete(User $user): PromiseInterface;
+    public function delete(string $uid): PromiseInterface;
 
 }

@@ -1,12 +1,10 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Domain\Command\DeleteUser;
-use App\Domain\Model\User\User;
 use Drift\CommandBus\Bus\CommandBus;
 use Exception;
 use React\Promise\PromiseInterface;
@@ -16,18 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 class DeleteUserController
 {
 
-    private $commandBus;
+    private CommandBus $commandBus;
 
     public function __construct(CommandBus $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(string $id, Request $request): PromiseInterface
+    public function __invoke(string $uid, Request $request): PromiseInterface
     {
         return $this->commandBus
             ->execute(
-                new DeleteUser(new User($id, json_decode($request->getContent())->name))
+                new DeleteUser($uid)
             )
             ->then( function () {
                 return new JsonResponse(null, 202);

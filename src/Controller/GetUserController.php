@@ -34,7 +34,7 @@ class GetUserController
     /**
      * @var QueryBus
      */
-    private $queryBus;
+    private QueryBus $queryBus;
 
     /**
      * @param QueryBus $queryBus
@@ -56,10 +56,8 @@ class GetUserController
             ->queryBus
             ->ask(new GetUser($uid))
             ->then(function (User $user) {
-
                 return new JsonResponse(UserTransformer::toArray($user));
             })->otherwise(function(UserNotFoundException $exception){
-
                 return new JsonResponse('User not found', 404);
             });
     }

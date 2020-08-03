@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 namespace App\Domain\Command;
 
-use App\Domain\Model\User\User;
-
 class DeleteUser
 {
-    private User $user;
+    /**
+     * @var string
+     */
+    private $uid;
 
-    public function __construct(User $user)
+    /**
+     * GetValue constructor.
+     *
+     * @param string $uid
+     */
+    public function __construct(string $uid)
     {
-        $this->user = $user;
+        $this->uid = $uid;
     }
 
-    public function getUser(): User
+    /**
+     * @return string
+     */
+    public function uid(): string
     {
-        return $this->user;
+        return $this->uid;
     }
 }

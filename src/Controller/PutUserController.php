@@ -6,7 +6,6 @@ use App\Controller\Transformer\UserTransformer;
 use App\Domain\Command\PutUser;
 use App\Domain\Model\User\NameTooShortException;
 use Drift\CommandBus\Bus\CommandBus;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

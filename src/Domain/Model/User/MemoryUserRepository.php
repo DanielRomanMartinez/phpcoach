@@ -31,10 +31,10 @@ class MemoryUserRepository implements UserRepository
     }
 
     /**
-     * @param int $uid
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function find(int $uid): PromiseInterface
+    public function find(string $uid): PromiseInterface
     {
         echo 'find';
         return array_key_exists($uid, $this->users)
@@ -43,13 +43,15 @@ class MemoryUserRepository implements UserRepository
     }
 
     /**
-     * @param User $user
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function delete(User $user): PromiseInterface
+    public function delete(string $uid): PromiseInterface
     {
-        if (array_key_exists($user->uid(), $this->users)) {
-            unset($this->users[$user->uid()]);
+        echo 'delete 2';
+        if (array_key_exists($uid, $this->users)) {
+            unset($this->users[$uid]);
+            echo 'resolve';
             return resolve(true);
         }
 

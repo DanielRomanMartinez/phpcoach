@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Model\User;
 
+use App\Domain\Event\UserWasDeleted;
 use App\Domain\Event\UserWasSaved;
 use Drift\HttpKernel\AsyncKernelEvents;
 use React\Promise\PromiseInterface;
@@ -39,25 +40,28 @@ class ComposedUserRepository implements UserRepository, EventSubscriberInterface
      */
     public function save(User $user): PromiseInterface
     {
+        echo "save \n";
         return $this->persistenceRepository->save($user);
     }
 
     /**
-     * @param int $id
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function find(int $id): PromiseInterface
+    public function find(string $uid): PromiseInterface
     {
-        return $this->memoryRepository->find($id);
+        echo "find \n";
+        return $this->memoryRepository->find($uid);
     }
 
     /**
-     * @param User $user
+     * @param string $uid
      * @return PromiseInterface
      */
-    public function delete(User $user): PromiseInterface
+    public function delete(string $uid): PromiseInterface
     {
-        return $this->persistenceRepository->delete($user);
+        echo "delete \n";
+        return $this->persistenceRepository->delete($uid);
     }
 
     /**
@@ -66,7 +70,7 @@ class ComposedUserRepository implements UserRepository, EventSubscriberInterface
      */
     public function loadAllUsersToMemory() : PromiseInterface
     {
-        echo 'loadAllUsersToMemory';
+        echo 'loadAllUsersToMemory \n';
         return $this
             ->persistenceRepository
             ->findAll()
@@ -83,6 +87,9 @@ class ComposedUserRepository implements UserRepository, EventSubscriberInterface
     {
         return [
             UserWasSaved::class => [
+                ['loadAllUsersToMemory', 0]
+            ],
+            UserWasDeleted::class => [
                 ['loadAllUsersToMemory', 0]
             ],
             AsyncKernelEvents::PRELOAD => [

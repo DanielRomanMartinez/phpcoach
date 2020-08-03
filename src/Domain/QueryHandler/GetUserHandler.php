@@ -14,7 +14,7 @@ final class GetUserHandler
     /**
      * @var UserRepository
      */
-    private $userRepository;
+    private UserRepository $userRepository;
 
     /**
      * DeleteValueHandler constructor.

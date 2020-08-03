@@ -10,6 +10,6 @@ put_user:
   methods: [PUT]
 
 user_delete:
-  path: /users/{id}
+  path: /users/{uid}
   controller: App\Controller\DeleteUserController
   methods: [DELETE]
