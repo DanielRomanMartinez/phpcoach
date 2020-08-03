@@ -18,4 +18,5 @@ return [
     Drift\CommandBus\CommandBusBundle::class => ['all' => true],
     Drift\DBAL\DBALBundle::class => ['all' => true],
     Drift\EventBus\EventBusBundle::class => ['all' => true],
+    Drift\Websocket\WebsocketBundle::class => ['all' => true],
 ];

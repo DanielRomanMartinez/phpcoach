@@ -20,7 +20,8 @@
     "drift/dbal-bundle": "*",
     "clue/reactphp-sqlite": "*",
     "react/mysql": "*",
-    "drift/amqp-bundle": "*"
+    "drift/amqp-bundle": "*",
+    "drift/websocket-bundle": "*"
   },
 
   "autoload": {

@@ -36,6 +36,11 @@ event_bus:
         amqp:
             host: localhost
 
+websocket:
+    routes:
+        events:
+            path: /events
+
 # config/services.yaml
 services:
     _defaults:
@@ -72,6 +77,14 @@ services:
     #
     App\Domain\Middleware\:
         resource: "%app_path%/src/Domain/Middleware/*"
+        tags:
+            - {name: "service"}
+
+    #
+    # EventSubscribers
+    #
+    App\Domain\EventSubscriber\:
+        resource: "%app_path%/src/Domain/EventSubscriber/*"
         tags:
             - {name: "service"}
 
